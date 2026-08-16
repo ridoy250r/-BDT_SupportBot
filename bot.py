@@ -5,8 +5,9 @@ from telegram.ext import (
     ContextTypes,
     filters
 )
+import os
 
-TOKEN = "8622176657:AAGH9hOdG9c5lwWmqTp4aAZcbwMIeTQcTUc"
+TOKEN = os.environ["8622176657:AAGH9hOdG9c5lwWmqTp4aAZcbwMIeTQcTUc"]
 
 REPLIES = {
     "hello": "Welcome to our group",
@@ -16,12 +17,15 @@ REPLIES = {
 }
 
 async def auto_reply(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    text = update.message.text.lower()
+    if update.message and update.message.text:
+        text = update.message.text.lower()
 
-    if text in REPLIES:
-        await update.message.reply_text(REPLIES[text])
+        if text in REPLIES:
+            await update.message.reply_text(REPLIES[text])
 
 app = Application.builder().token(TOKEN).build()
-app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, auto_reply))
+app.add_handler(
+    MessageHandler(filters.TEXT & ~filters.COMMAND, auto_reply)
+)
 
 app.run_polling()
