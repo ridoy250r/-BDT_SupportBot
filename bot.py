@@ -1,19 +1,20 @@
+import os
+
 from telegram import Update
 from telegram.ext import (
     Application,
     MessageHandler,
     ContextTypes,
-    filters
+    filters,
 )
-import os
 
-TOKEN = os.environ["8622176657:AAGH9hOdG9c5lwWmqTp4aAZcbwMIeTQcTUc"]
+TOKEN = os.environ["BOT_TOKEN"]
 
 REPLIES = {
     "hello": "Welcome to our group",
     "bonus": "আজকের বোনাস ৫০ টাকা",
     "support": "সাপোর্টের জন্য অ্যাডমিনকে মেসেজ করুন",
-    "payment": "পেমেন্ট সমস্যার বিস্তারিত লিখুন"
+    "payment": "পেমেন্ট সমস্যার বিস্তারিত লিখুন",
 }
 
 async def auto_reply(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -23,7 +24,9 @@ async def auto_reply(update: Update, context: ContextTypes.DEFAULT_TYPE):
         if text in REPLIES:
             await update.message.reply_text(REPLIES[text])
 
+
 app = Application.builder().token(TOKEN).build()
+
 app.add_handler(
     MessageHandler(filters.TEXT & ~filters.COMMAND, auto_reply)
 )
