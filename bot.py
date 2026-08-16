@@ -1,5 +1,10 @@
 from telegram import Update
-from telegram.ext import Application, MessageHandler, filters, ContextTypes
+from telegram.ext import (
+    Application,
+    MessageHandler,
+    ContextTypes,
+    filters
+)
 
 TOKEN = "8622176657:AAGH9hOdG9c5lwWmqTp4aAZcbwMIeTQcTUc"
 
